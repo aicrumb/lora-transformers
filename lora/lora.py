@@ -46,3 +46,8 @@ def load_lora_layers(model: torch.nn.Module, filename: str):
         if isinstance(layer, LoRALinear) and name in lora_layers:
             layer.lora_down.load_state_dict(lora_layers[name]["lora_down"])
             layer.lora_up.load_state_dict(lora_layers[name]["lora_up"])
+
+def change_alpha_parameter(model: torch.nn.Module, alpha: float):
+    for name, layer in model._modules.items():
+        if isinstance(layer, LoRALinear):
+            layer.alpha = alpha
